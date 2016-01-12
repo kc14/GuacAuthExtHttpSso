@@ -1,0 +1,16 @@
+{
+
+    "guacamoleVersion" : "0.9.8",
+
+    "name"      : "HTTP SSO Authentication",
+    "namespace" : "guac-http-sso",
+
+    "authProviders" : [
+        "net.sourceforge.guacamole.net.auth.http.sso.HttpSsoAuthenticationProvider"
+    ],
+
+    "translations" : [
+        "translations/en.json"
+    ]
+
+}

@@ -1,0 +1,94 @@
+
+------------------------------------------------------------
+ About this README
+------------------------------------------------------------
+
+This README is intended to provide quick and to-the-point documentation for
+technical users intending to compile parts of Guacamole themselves.
+
+Distribution-specific packages are available from the files section of the main
+project page:
+
+    http://sourceforge.net/projects/guacamole/files/
+
+Distribution-specific documentation is provided on the Guacamole wiki:
+
+    http://guac-dev.org/
+
+
+------------------------------------------------------------
+ What is guac-http-sso?
+------------------------------------------------------------
+
+guacamole-auth-noauth is a Java library for use with the Guacamole web
+application. It provides Single-Sign-On over HTTP. This means there is
+a Single-Sign-On Proxy running in front of Guacamole which identifies
+and authenticates a user. The name of the authenticated user is set
+in a configurable HTTP header variable. The default for this variable
+is "REMOTE_USER". You can define another variable name containing the
+user name by defining the guacamole property:
+
+   http-sso-remote-user-header
+   
+E.g. if your SSO Proxy sets the user name in the HTTP Header variable
+"SSO_AUTHENTICATED_USER" you would set the above mentioned property to:
+
+   http-sso-remote-user-header: SSO_AUTHENTICATED_USER
+
+in the guacamole.properties file.
+
+This authentication provider does not return any connections. It just
+returns the user authenticated by the SSO Proxy as an authenticated
+user to guacamole. 
+
+Beware: As long as an user can be authenticated by this provider there
+will be NO login screen.
+
+------------------------------------------------------------
+ Compiling and installing guacamole-auth-noauth
+------------------------------------------------------------
+
+guacamole-auth-noauth is built using Maven. Building guacamole-auth-noauth
+compiles all classes and packages them into a redistributable .jar file. This
+.jar file can be installed in the library directory configured in
+guacamole.properties such that the authentication provider is available.
+
+1) Run mvn package
+
+    $ mvn package
+
+    Maven will download any needed dependencies for building the .jar file.
+    Once all dependencies have been downloaded, the .jar file will be
+    created in the target/ subdirectory of the current directory.
+
+    If this process fails, check the build errors, and verify that the
+    contents of your settings.xml file is correct.
+
+2) Extract the .tar.gz file now present in the target/ directory, and
+   place the .jar files in the extracted lib/ subdirectory in the library
+   directory specified in guacamole.properties.
+
+    You will likely need to do this as root.
+
+    If you do not have a library directory configured in your
+    guacamole.properties, you will need to specify one. The directory
+    is specified using the "lib-directory" property.
+
+3) Restart Tomcat
+
+    The guacamole.properties file as well as any authentication provider .jar
+    files are only read when Tomcat starts. This goes for any other servlet
+    container as well.
+
+    You must restart Tomcat before any of the above changes can take effect.
+
+
+------------------------------------------------------------
+ Reporting problems
+------------------------------------------------------------
+
+Please report any bugs encountered by opening a new ticket at the Trac system
+hosted at:
+
+    http://guac-dev.org/trac/
+

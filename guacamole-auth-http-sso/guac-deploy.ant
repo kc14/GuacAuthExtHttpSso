@@ -1,0 +1,13 @@
+<project name="guacDeploy" default="guac.deploy" basedir=".">
+
+	<description>
+      Deploy the guacamole extension to the subdirectory in the guacamole home directory
+    </description>
+
+	<loadproperties srcFile="guac-deploy.properties"/>
+		        
+	<target name="guac.deploy" > 
+		<copy file="${deploy.artifact}" todir="${guac.home}/extensions"/>
+	</target>
+
+</project>
